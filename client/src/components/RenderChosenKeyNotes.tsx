@@ -2,35 +2,36 @@ import { useEffect, useState } from "react";
 
 interface IRenderChosenKeyNotesProps {
   chosenKeyNotes: string[];
-  chosenKeyNoteNumbers: number[];
   currentKey: string;
+}
+
+interface INoteWithIndex {
+  note: string;
+  originalIndex: number;
 }
 
 export const RenderChosenKeyNotes = ({
   currentKey,
   chosenKeyNotes,
-  chosenKeyNoteNumbers,
 }: IRenderChosenKeyNotesProps) => {
-  const [noteClicked, setNoteClicked] = useState<string>("");
-  const [numberClicked, setNumberClicked] = useState<number>(8);
-  const [chosenKeyNotesShuffled, setChosenKeyNotesShuffled] = useState<
-    string[]
-  >([]);
+  const [noteClicked, setNoteClicked] = useState<number>(7);
+  const [numberClicked, setNumberClicked] = useState<number>(7);
+  const [shuffledNotes, setShuffledNotes] = useState<INoteWithIndex[]>([]);
 
-  const [correctNotes, setCorrectNotes] = useState<string[]>([]);
+  const [correctNotes, setCorrectNotes] = useState<number[]>([]);
   const [correctNumbers, setCorrectNumbers] = useState<number[]>([]);
-  const [incorrectCounter, setIncorrectCounter] = useState<number>(0);
 
+  const [incorrectCounter, setIncorrectCounter] = useState<number>(0);
   const [isComboCorrect, setIsComboCorrect] = useState<string>("waiting");
 
-  const handleNoteClick = (note: string) => {
-    setNoteClicked(note);
+  const handleNoteClick = (noteIndex: number) => {
+    setNoteClicked(noteIndex);
   };
   const handleNumberClick = (number: number) => {
     setNumberClicked(number);
   };
 
-  const noteClickedSplit = noteClicked.split("_").pop();
+  const noteIndexes: number[] = chosenKeyNotes.map((_, index) => index);
 
   const green = "#46f800";
 
@@ -38,9 +39,10 @@ export const RenderChosenKeyNotes = ({
 
   const blue = "#222dff";
 
+
   useEffect(() => {
-    if (numberClicked !== 8 && noteClicked !== "") {
-      if (+noteClickedSplit! === numberClicked) {
+    if (numberClicked !== 7 && noteClicked !== 7) {
+      if (noteClicked === numberClicked) {
         setIsComboCorrect("correct");
         // Add the note to the correct list if it's not already there
         setCorrectNotes((prev) =>
@@ -62,30 +64,28 @@ export const RenderChosenKeyNotes = ({
     setCorrectNotes([]);
     setCorrectNumbers([]);
     setIncorrectCounter(0);
-    setNoteClicked("");
-    setNumberClicked(8);
+    setNoteClicked(7);
+    setNumberClicked(7);
   }, [chosenKeyNotes]);
 
   const handleRestartClick = () => {
     setCorrectNotes([]);
     setCorrectNumbers([]);
     setIncorrectCounter(0);
-    setNoteClicked("");
-    setNumberClicked(8);
-    setChosenKeyNotesShuffled(shuffle(chosenKeyNotes))
+    setNoteClicked(7);
+    setNumberClicked(7);
   };
 
-  const shuffle = (array: string[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  };
+
 
   useEffect(() => {
-    setChosenKeyNotesShuffled(shuffle(chosenKeyNotes));
-  }, [chosenKeyNotes, chosenKeyNoteNumbers]);
+    const notesWithIndex = chosenKeyNotes.map((note, index) => ({
+      note,
+      originalIndex: index,
+    }));
+    const shuffled = [...notesWithIndex].sort(() => Math.random() - 0.5);
+    setShuffledNotes(shuffled);
+  }, [chosenKeyNotes]);
 
   return (
     <>
@@ -103,48 +103,49 @@ export const RenderChosenKeyNotes = ({
           ) : (
             <div></div>
           )}
+          <div>You've been right {correctNotes.length} times</div>
         </div>
       </div>
       <div className="flex flex-col h-dvh items-center gap-10">
         <div>Currently in the key of: {currentKey.split("_", 1)}</div>
         <div className="flex gap-10">
-          {chosenKeyNotesShuffled.map((chosenKeyNote, index) => (
-            <div key={index}>
+          {shuffledNotes.map(({ note, originalIndex }) => (
+            <div key={originalIndex}>
               <button
                 disabled={correctNotes.length === 7}
                 style={{
-                  borderColor: correctNotes.includes(chosenKeyNote)
+                  borderColor: correctNotes.includes(originalIndex)
                     ? green
-                    : chosenKeyNote === noteClicked
+                    : originalIndex === noteClicked
                     ? blue
-                    : chosenKeyNote === noteClicked &&
-                      isComboCorrect === "incorrect"
+                    : isComboCorrect === "incorrect" &&
+                      originalIndex === noteClicked
                     ? red
                     : "",
                 }}
-                onClick={() => handleNoteClick(chosenKeyNote)}
+                onClick={() => handleNoteClick(originalIndex)}
               >
-                {chosenKeyNote.split("_", 1)}
+                {note}
               </button>
             </div>
           ))}
         </div>
 
         <div className="flex gap-10">
-          {chosenKeyNoteNumbers.map((chosenKeyNoteNumber, index) => (
+          {noteIndexes.map((_, index) => (
             <div key={index}>
               <button
                 disabled={correctNotes.length === 7}
                 style={{
-                  borderColor: correctNumbers.includes(chosenKeyNoteNumber)
+                  borderColor: correctNumbers.includes(index)
                     ? green
-                    : chosenKeyNoteNumber === numberClicked
+                    : index === numberClicked
                     ? blue
                     : "",
                 }}
-                onClick={() => handleNumberClick(chosenKeyNoteNumber)}
+                onClick={() => handleNumberClick(index)}
               >
-                {chosenKeyNoteNumber}
+                {index + 1}
               </button>
             </div>
           ))}

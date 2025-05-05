@@ -8,13 +8,10 @@ export const RenderKeySignatures = () => {
 
   const [chosenKeyNotes, setChosenKeyNotes] = useState<string[]>([]);
   const [currentKey, setCurrentKey] = useState<string>("")
-  const [chosenKeyNoteNumbers, setChosenKeyNoteNumbers] = useState<number[]>(
-    []
-  );
 
-  const handleNoteClick = (notes: string[], numbers: number[], key: string) => {
+
+  const handleNoteClick = (notes: string[], key: string) => {
     setChosenKeyNotes(notes);
-    setChosenKeyNoteNumbers(numbers);
     setCurrentKey(key)
   };
 
@@ -23,7 +20,6 @@ export const RenderKeySignatures = () => {
   const handleRandomizeClick = () => {
     const randomKey = keySignatures[Math.floor(Math.random() * keySignatures.length)]    
     setChosenKeyNotes(randomKey.notes)
-    setChosenKeyNoteNumbers(randomKey.noteToNumber)
     setCurrentKey(randomKey.name)
     
   }
@@ -36,7 +32,7 @@ export const RenderKeySignatures = () => {
           <div key={index}>
             <button
               onClick={() => {
-                handleNoteClick(keySignature.notes, keySignature.noteToNumber, keySignature.name);
+                handleNoteClick(keySignature.notes, keySignature.name);
               }}
             >
               {keySignature.name}
@@ -49,7 +45,6 @@ export const RenderKeySignatures = () => {
         <RenderChosenKeyNotes
           currentKey={currentKey}
           chosenKeyNotes={chosenKeyNotes}
-          chosenKeyNoteNumbers={chosenKeyNoteNumbers}
         ></RenderChosenKeyNotes>
       )}
       

@@ -16,3 +16,35 @@ if button.style.borderColor === green do not change the color. like if it has be
 game: find parallel minor/major of random key.
 
 random key is displayed on screen. either major or minor. user chooses from a list of all different keys which one is the parallel minor/major
+
+scale game: would display a scale, ex: CDEFGAB and user chooses between 5 (?) different scales which one it is. 
+
+
+
+create a database? maybe have user collection, keysignature db? like a keysignature wich looks like 
+
+{
+    key: string, 
+    notes: string[], 
+    minorParallel: string,
+    scales: Scale[]
+}
+
+
+{
+    ionian: string[]
+    dorian: string[]
+    phrygian: string[]
+    lydian: string[]
+    mixolydian: string[]
+    aolian: string[]
+    locrian: string[]
+}
+
+how to get the scales? each scale has a formula. dorian is flat 3rd and flat 7th (if you utgår from a major scale) so CDEFGAB would have a function to change it
+something like this:
+
+const dorian = () => {
+    keySignature.notes // looks something like ["C_1", "D_2", "E_3", "F_4", "G_5", "A_6", "B_7"]
+    keySignature.notes[2] + "b"
+}
