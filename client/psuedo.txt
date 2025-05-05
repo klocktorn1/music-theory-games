@@ -1,0 +1,18 @@
+if color goes to green then set the border color to that permanently
+
+
+now when clicking button: button goes blue. click on different button, that button goes blue and first clicked button goes to default. if buttoncombo is true, ie if the top note and
+the bottom number are the same then both buttons get green border. problem is when clicking another button the green buttons are still comparing.
+
+how to fix: if buttons are green do not change color. If isComboCorrect === true
+
+
+if button.style.borderColor === green do not change the color. like if it has been set to correct then it cannot be changed
+
+
+
+
+
+game: find parallel minor/major of random key.
+
+random key is displayed on screen. either major or minor. user chooses from a list of all different keys which one is the parallel minor/major
