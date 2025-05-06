@@ -1,6 +1,5 @@
 import { KeySignature } from "../models/KeySignature";
 
-
 export interface IKeySignatureAction {
   payload: string;
   type: IChosenKeySignatureActionType;
@@ -8,7 +7,7 @@ export interface IKeySignatureAction {
 
 export enum IChosenKeySignatureActionType {
   ADDED,
-  RESET
+  RESET,
 }
 
 export const ChosenKeyReducer = (
@@ -17,10 +16,12 @@ export const ChosenKeyReducer = (
 ): KeySignature => {
   switch (action.type) {
     case IChosenKeySignatureActionType.ADDED: {
-        return chosenKeyState = JSON.parse(action.payload)
+      const parsed = JSON.parse(action.payload);
+      return new KeySignature(parsed.key, parsed.notes, parsed.minorParallel);
     }
     case IChosenKeySignatureActionType.RESET: {
-        return chosenKeyState = JSON.parse(action.payload)
+      const parsed = JSON.parse(action.payload);
+      return new KeySignature(parsed.key, parsed.notes, parsed.minorParallel);
     }
   }
   return chosenKeyState;

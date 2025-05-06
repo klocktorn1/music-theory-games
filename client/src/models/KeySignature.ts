@@ -15,7 +15,7 @@ export class KeySignature {
     this.minorParallel = minorParallel;
   }
 
-  dorian() {
+  dorian() {    
     const newNotes = [...this.notes];
 
     if (newNotes[2].includes("♯")) {
@@ -24,7 +24,7 @@ export class KeySignature {
       newNotes[2] = `${this.notes[2]}b`;
     }
 
-    
+  
     if (newNotes[6].includes("♯")) {
       newNotes[6] = `${this.notes[6].replace("♯", "")}`;
     } else {
@@ -34,19 +34,8 @@ export class KeySignature {
 
     console.log("Ionian:", this.notes);
     console.log("Dorian:", newNotes); 
+
+    return `The ${this.key} dorian scale is: ${newNotes}`
   }
 }
 
-// export class Product {
-//     name: string;
-//     price: number;
-//     constructor(name: string, price: number) {
-//       this.name = name;
-//       this.price = price;
-//     }
-
-//     displayProduct() {
-//       console.log(`Product: ${this.name}`);
-//       console.log(`Price: $${this.price}`);
-//     }
-//   }

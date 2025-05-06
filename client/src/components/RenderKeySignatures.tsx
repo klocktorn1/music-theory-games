@@ -23,9 +23,16 @@ export const RenderKeySignatures = () => {
   const handleRandomizeClick = () => {
     const randomKey =
       keySignatures[Math.floor(Math.random() * keySignatures.length)];
+
+      const constructed = new KeySignature(
+        randomKey.key,
+        randomKey.notes,
+        randomKey.minorParallel
+      );
+      
     chosenKeyDispatch({
       type: IChosenKeySignatureActionType.ADDED,
-      payload: JSON.stringify(randomKey),
+      payload: JSON.stringify(constructed),
     });
   };
 
