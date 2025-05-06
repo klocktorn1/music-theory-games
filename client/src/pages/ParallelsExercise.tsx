@@ -18,6 +18,8 @@ export const ParallelsExercise = () => {
             <Link to={"/major_parallels"}><button>Major parallels</button></Link>
           </div>
 
+          
+
     </>
   );
 };

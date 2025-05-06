@@ -15,6 +15,9 @@ export const Layout = () => {
                         <li>
                             <NavLink to={"/note_exercise"}>Note Exercise</NavLink>
                         </li>
+                        <li>
+                            <NavLink to={"/scale_exercise"}>Scale Exercise</NavLink>
+                        </li>
                     </ul>
                 </header>
                 <main><Outlet></Outlet></main>

@@ -11,6 +11,8 @@ export const getAllKeys = async (_, res: Response, next: NextFunction) => {
       console.log("getAllKeys function called");
       const keySignatures = await keySignaturesCollection.find().toArray();
       res.send(keySignatures);
+
+
      
       
     } catch (error) {

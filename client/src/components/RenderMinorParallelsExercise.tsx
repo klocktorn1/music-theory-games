@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import { KeySignaturesContext } from "../contexts/KeySignaturesContext";
-import { IKeySignatures } from "../models/IKeySignatures";
+import { KeySignature } from "../models/KeySignature";
 
 export const RenderMinorParallelsExercise = () => {
   const { keySignatures } = useContext(KeySignaturesContext);
 
-  const [randomKey, setRandomKey] = useState<IKeySignatures>(keySignatures[Math.floor(Math.random() * keySignatures.length)])
+  const [randomKey, setRandomKey] = useState<KeySignature>(keySignatures[Math.floor(Math.random() * keySignatures.length)])
 
     
 

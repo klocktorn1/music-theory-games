@@ -48,3 +48,12 @@ const dorian = () => {
     keySignature.notes // looks something like ["C_1", "D_2", "E_3", "F_4", "G_5", "A_6", "B_7"]
     keySignature.notes[2] + "b"
 }
+
+if (newNotes[2].includes("#") || newNotes[6].includes("#")) {
+    newNotes[2] = `${this.notes[2].replace("#", "")}`;
+    newNotes[6] = `${this.notes[6].replace("#", "")}`;
+
+} else {
+    newNotes[2] = `${this.notes[2]}b`;
+    newNotes[6] = `${this.notes[6]}b`;
+}

@@ -1,19 +1,14 @@
-import { useEffect, useState } from "react";
-
-interface IRenderChosenKeyNotesProps {
-  chosenKeyNotes: string[];
-  currentKey: string;
-}
+import { useContext, useEffect, useState } from "react";
+import { ChosenKeyContext } from "../contexts/ChosenKeyContext";
 
 interface INoteWithIndex {
   note: string;
   originalIndex: number;
 }
 
-export const RenderChosenKeyNotes = ({
-  currentKey,
-  chosenKeyNotes,
-}: IRenderChosenKeyNotesProps) => {
+export const RenderNotesExercise = ({}) => {
+  const { chosenKey } = useContext(ChosenKeyContext);
+
   const [noteClicked, setNoteClicked] = useState<number>(7);
   const [numberClicked, setNumberClicked] = useState<number>(7);
   const [shuffledNotes, setShuffledNotes] = useState<INoteWithIndex[]>([]);
@@ -24,6 +19,8 @@ export const RenderChosenKeyNotes = ({
   const [incorrectCounter, setIncorrectCounter] = useState<number>(0);
   const [isComboCorrect, setIsComboCorrect] = useState<string>("waiting");
 
+  
+
   const handleNoteClick = (noteIndex: number) => {
     setNoteClicked(noteIndex);
   };
@@ -31,7 +28,7 @@ export const RenderChosenKeyNotes = ({
     setNumberClicked(number);
   };
 
-  const noteIndexes: number[] = chosenKeyNotes.map((_, index) => index);
+  const noteIndexes: number[] = chosenKey.notes.map((_, index) => index);
 
   const green = "#46f800";
 
@@ -39,12 +36,10 @@ export const RenderChosenKeyNotes = ({
 
   const blue = "#222dff";
 
-
   useEffect(() => {
     if (numberClicked !== 7 && noteClicked !== 7) {
       if (noteClicked === numberClicked) {
         setIsComboCorrect("correct");
-        // Add the note to the correct list if it's not already there
         setCorrectNotes((prev) =>
           prev.includes(noteClicked) ? prev : [...prev, noteClicked]
         );
@@ -66,7 +61,13 @@ export const RenderChosenKeyNotes = ({
     setIncorrectCounter(0);
     setNoteClicked(7);
     setNumberClicked(7);
-  }, [chosenKeyNotes]);
+    const notesWithIndex = chosenKey.notes.map((note, index) => ({
+      note,
+      originalIndex: index,
+    }));
+    const shuffled = [...notesWithIndex].sort(() => Math.random() - 0.5);
+    setShuffledNotes(shuffled);
+  }, [chosenKey]);
 
   const handleRestartClick = () => {
     setCorrectNotes([]);
@@ -74,18 +75,13 @@ export const RenderChosenKeyNotes = ({
     setIncorrectCounter(0);
     setNoteClicked(7);
     setNumberClicked(7);
-  };
-
-
-
-  useEffect(() => {
-    const notesWithIndex = chosenKeyNotes.map((note, index) => ({
+    const notesWithIndex = chosenKey.notes.map((note, index) => ({
       note,
       originalIndex: index,
     }));
     const shuffled = [...notesWithIndex].sort(() => Math.random() - 0.5);
     setShuffledNotes(shuffled);
-  }, [chosenKeyNotes]);
+  };
 
   return (
     <>
@@ -107,7 +103,7 @@ export const RenderChosenKeyNotes = ({
         </div>
       </div>
       <div className="flex flex-col h-dvh items-center gap-10">
-        <div>Currently in the key of: {currentKey.split("_", 1)}</div>
+        <div>Currently in the key of: {chosenKey.key}</div>
         <div className="flex gap-10">
           {shuffledNotes.map(({ note, originalIndex }) => (
             <div key={originalIndex}>

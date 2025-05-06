@@ -1,9 +1,9 @@
 import { createContext, PropsWithChildren, useEffect, useState } from "react";
-import { IKeySignatures } from "../models/IKeySignatures";
+import { KeySignature } from "../models/KeySignature";
 import { getAllKeys } from "../services/keySignaturesService";
 
 export interface IKeySignaturesContext {
-  keySignatures: IKeySignatures[];
+  keySignatures: KeySignature[];
 }
 
 export const KeySignaturesContext = createContext<IKeySignaturesContext>({
@@ -11,13 +11,12 @@ export const KeySignaturesContext = createContext<IKeySignaturesContext>({
 });
 
 export const KeySignaturesProvider = ({ children }: PropsWithChildren) => {
-  const [keySignatures, setKeySignatures] = useState<IKeySignatures[]>([]);
+  const [keySignatures, setKeySignatures] = useState<KeySignature[]>([]);
 
   useEffect(() => {
     const getAll = async () => {
-      const response: IKeySignatures[] = await getAllKeys();
+      const response: KeySignature[] = await getAllKeys();
       setKeySignatures(response);
-      console.log(response);
     };
 
     getAll();

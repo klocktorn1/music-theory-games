@@ -2,7 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "./pages/Layout";
 import { NoteExercise } from "./pages/NoteExercise";
 import { ParallelsExercise } from "./pages/ParallelsExercise";
-import { MinorParallels } from "./pages/MinorParallels";
+import { MinorParallelExercise } from "./pages/MinorParallelExercise";
+import { ScaleExercise } from "./pages/ScaleEcercise";
 
 export const router = createBrowserRouter([
     {
@@ -19,7 +20,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/minor_parallels",
-                element: <MinorParallels></MinorParallels>
+                element: <MinorParallelExercise></MinorParallelExercise>
+            },
+            {
+                path: "/scale_exercise",
+                element: <ScaleExercise></ScaleExercise>
             }
 
         ]

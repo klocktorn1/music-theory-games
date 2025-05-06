@@ -1,29 +1,33 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { KeySignaturesContext } from "../contexts/KeySignaturesContext";
-import { RenderChosenKeyNotes } from "./RenderChosenKeyNotes";
-
+import { KeySignature } from "../models/KeySignature";
+import { ChosenKeyContext } from "../contexts/ChosenKeyContext";
+import { IChosenKeySignatureActionType } from "../reducers/ChosenKeyReducer";
 
 export const RenderKeySignatures = () => {
   const { keySignatures } = useContext(KeySignaturesContext);
 
-  const [chosenKeyNotes, setChosenKeyNotes] = useState<string[]>([]);
-  const [currentKey, setCurrentKey] = useState<string>("")
+  const { chosenKeyDispatch } = useContext(ChosenKeyContext);
 
-
-  const handleNoteClick = (notes: string[], key: string) => {
-    setChosenKeyNotes(notes);
-    setCurrentKey(key)
+  const handleKeyClick = (
+    key: string,
+    notes: string[],
+    minorParallel: string
+  ) => {
+    chosenKeyDispatch({
+      type: IChosenKeySignatureActionType.ADDED,
+      payload: JSON.stringify(new KeySignature(key, notes, minorParallel)),
+    });
   };
 
-
-  
   const handleRandomizeClick = () => {
-    const randomKey = keySignatures[Math.floor(Math.random() * keySignatures.length)]    
-    setChosenKeyNotes(randomKey.notes)
-    setCurrentKey(randomKey.name)
-    
-  }
-  
+    const randomKey =
+      keySignatures[Math.floor(Math.random() * keySignatures.length)];
+    chosenKeyDispatch({
+      type: IChosenKeySignatureActionType.ADDED,
+      payload: JSON.stringify(randomKey),
+    });
+  };
 
   return (
     <>
@@ -32,22 +36,19 @@ export const RenderKeySignatures = () => {
           <div key={index}>
             <button
               onClick={() => {
-                handleNoteClick(keySignature.notes, keySignature.name);
+                handleKeyClick(
+                  keySignature.key,
+                  keySignature.notes,
+                  keySignature.minorParallel
+                );
               }}
             >
-              {keySignature.name}
+              {keySignature.key}
             </button>
           </div>
         ))}
       </div>
       <button onClick={handleRandomizeClick}>Randomize key</button>
-      {chosenKeyNotes.length > 0 && (
-        <RenderChosenKeyNotes
-          currentKey={currentKey}
-          chosenKeyNotes={chosenKeyNotes}
-        ></RenderChosenKeyNotes>
-      )}
-      
     </>
   );
 };
