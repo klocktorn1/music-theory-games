@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { ChosenKeyContext } from "../contexts/ChosenKeyContext";
+import { IChosenKeySignatureActionType } from "../reducers/ChosenKeyReducer";
+import { KeySignature } from "../models/KeySignature";
 
 interface INoteWithIndex {
   note: string;
@@ -7,7 +9,7 @@ interface INoteWithIndex {
 }
 
 export const RenderNotesExercise = ({}) => {
-  const { chosenKey } = useContext(ChosenKeyContext);
+  const { chosenKey, chosenKeyDispatch } = useContext(ChosenKeyContext);
 
   const [noteClicked, setNoteClicked] = useState<number>(7);
   const [numberClicked, setNumberClicked] = useState<number>(7);
@@ -18,8 +20,6 @@ export const RenderNotesExercise = ({}) => {
 
   const [incorrectCounter, setIncorrectCounter] = useState<number>(0);
   const [isComboCorrect, setIsComboCorrect] = useState<string>("waiting");
-
-  
 
   const handleNoteClick = (noteIndex: number) => {
     setNoteClicked(noteIndex);
@@ -83,12 +83,19 @@ export const RenderNotesExercise = ({}) => {
     setShuffledNotes(shuffled);
   };
 
+  const handleChangeKeyClick = () => {
+    chosenKeyDispatch({
+      type: IChosenKeySignatureActionType.RESET,
+      payload: JSON.stringify(new KeySignature("", [], "")),
+    });
+  };
+
   return (
     <>
       <div className="flex justify-between m-3">
         <div>
           <div>You've been wrong {incorrectCounter} times</div>
-          {incorrectCounter >= 3 && incorrectCounter <= 5 ? (
+          {/* {incorrectCounter >= 3 && incorrectCounter <= 5 ? (
             <div>you suck</div>
           ) : incorrectCounter > 5 && incorrectCounter <= 7 ? (
             <div>you really suck</div>
@@ -98,8 +105,9 @@ export const RenderNotesExercise = ({}) => {
             <div>you win!</div>
           ) : (
             <div></div>
-          )}
+          )} */}
           <div>You've been right {correctNotes.length} times</div>
+          {correctNotes.length === 7 && <div><b>You win!</b></div>}
         </div>
       </div>
       <div className="flex flex-col h-dvh items-center gap-10">
@@ -147,6 +155,13 @@ export const RenderNotesExercise = ({}) => {
           ))}
         </div>
         <button onClick={handleRestartClick}>Restart</button>
+        <button
+          onClick={() => {
+            handleChangeKeyClick();
+          }}
+        >
+          Choose a different key
+        </button>
       </div>
     </>
   );

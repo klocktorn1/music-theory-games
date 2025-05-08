@@ -57,3 +57,7 @@ if (newNotes[2].includes("#") || newNotes[6].includes("#")) {
     newNotes[2] = `${this.notes[2]}b`;
     newNotes[6] = `${this.notes[6]}b`;
 }
+
+
+
+save time it took to get the right scale in an array?

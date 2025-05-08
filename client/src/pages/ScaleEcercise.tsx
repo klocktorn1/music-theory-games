@@ -4,6 +4,7 @@ import { IChosenKeySignatureActionType } from "../reducers/ChosenKeyReducer";
 import { KeySignature } from "../models/KeySignature";
 import { ChosenKeyContext } from "../contexts/ChosenKeyContext";
 import { RenderScaleExercise } from "../components/RenderScaleExercise";
+import { Link } from "react-router-dom";
 
 export const ScaleExercise = () => {
   const { chosenKey, chosenKeyDispatch } = useContext(ChosenKeyContext);
@@ -14,17 +15,17 @@ export const ScaleExercise = () => {
     });
   }, []);
 
-
-  
-
   return (
     <>
       <div>Pick a key:</div>
+      <Link to={"/"}>Go back to home</Link>
+
       <div>
-        <RenderKeySignatures></RenderKeySignatures>
-              {chosenKey.notes.length > 0 && (
-                <RenderScaleExercise></RenderScaleExercise>
-              )}
+        {chosenKey.notes.length > 0 ? (
+          <RenderScaleExercise></RenderScaleExercise>
+        ) : (
+          <RenderKeySignatures></RenderKeySignatures>
+        )}
       </div>
     </>
   );

@@ -27,7 +27,7 @@ export const RenderMinorParallelsExercise = () => {
       <div>Minor Parallels Game</div>
 
       <div>
-        <p>{randomKey.name}</p>
+        <p>{randomKey.key}</p>
         <div>
           Minor parallels:
           <div className="flex flex-wrap gap-3">
