@@ -1,5 +1,6 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Slider } from "../components/Slider";
+import { buttonStyle } from "../buttonStyle";
 
 export const Home = () => {
   return (
@@ -7,13 +8,13 @@ export const Home = () => {
     <Slider></Slider>
       <ul className="flex gap-5 justify-center p-5 items-center h-dvh">
         <li>
-          <NavLink to={"/parallels_exercise"}>Parallels Exercise</NavLink>
+          <Link className={`${buttonStyle}`} to={"/parallels_exercise"}>Parallels Exercise</Link>
         </li>
         <li>
-          <NavLink to={"/note_exercise"}>Note Exercise</NavLink>
+          <Link className={`${buttonStyle}`} to={"/note_exercise"}>Note Exercise</Link>
         </li>
         <li>
-          <NavLink to={"/scale_exercise"}>Scale Exercise</NavLink>
+          <Link className={`${buttonStyle}`} to={"/scale_exercise"}>Scale Exercise</Link>
         </li>
       </ul>
       

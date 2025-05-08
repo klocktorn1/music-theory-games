@@ -1,27 +1,34 @@
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { buttonStyle } from "../buttonStyle";
+
+interface IExercise {
+  link: string,
+  name: string
+}
 
 export const Slider = () => {
   const [index, setIndex] = useState<number>(0);
-  const [windowWidth, setWindowWitdth] = useState<number>(window.innerWidth);
-  const exercises: string[] = [
-    "note_exercise",
-    "parallels_exercise",
-    "scale_exercise",
+  const exercises: IExercise[] = [
+    {
+      link: "note_exercise",
+      name: "Note Exercise",
+    },
+    {
+      link: "scale_exercise",
+      name: "Scale Exercise",
+    },
+    {
+      link: "parallels_exercise",
+      name: "Parallels Exercise",
+    }
   ];
   console.log(exercises);
 
   const slideStyle = {
     transform: `translateX(${-100 * index}%)`,
   };
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowWitdth(window.innerWidth);
-    }
-    window.addEventListener("resize", handleResize);
-  }, []);
 
   const buttonStyling =
     "hover:bg-black hover:opacity-50 block absolute top-0 bottom-0 p-1 cursor-pointer text-[#232323] duration-300 ease-in-out";
@@ -43,13 +50,13 @@ export const Slider = () => {
             className="flex h-full transition-transform duration-500 ease-in-out m-3"
             style={slideStyle}
           >
-            {exercises.map((p, i) => (
+            {exercises.map((exercise, i) => (
               <Link
                 key={i}
-                to={`/${p}`}
+                to={`/${exercise.link}`}
                 className="flex-shrink-0 w-full flex justify-center"
               >
-                {p}
+                <button className={`${buttonStyle}`}>{exercise.name}</button>
               </Link>
             ))}
           </div>

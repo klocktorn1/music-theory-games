@@ -1,5 +1,6 @@
 
 import { Link } from "react-router-dom";
+import { buttonStyle } from "../buttonStyle";
 
 export const ParallelsExercise = () => {
 
@@ -10,14 +11,14 @@ export const ParallelsExercise = () => {
 
           <div>
             Welcome to the Parallels exercise! Start by choosing minor or major
-            paralells. The goal is to determine which minor or majjor parallel
+            parallels. The goal is to determine which minor or major parallel
             the given note has.
           </div>
-          <Link to={"/"}>Go back to home</Link>
+          <Link to={"/"}><button className={`${buttonStyle}`}>Back to home</button></Link>
 
           <div className="flex gap-6 justify-center mt-20">
-            <Link to={"/minor_parallels"}><button>Minor parallels</button></Link>
-            <Link to={"/major_parallels"}><button>Major parallels</button></Link>
+            <Link to={"/minor_parallels"}><button className={`${buttonStyle}`}>Minor parallels</button></Link>
+            <Link to={"/major_parallels"}><button className={`${buttonStyle}`}>Major parallels</button></Link>
           </div>
 
           

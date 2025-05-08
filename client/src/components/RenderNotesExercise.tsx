@@ -2,6 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { ChosenKeyContext } from "../contexts/ChosenKeyContext";
 import { IChosenKeySignatureActionType } from "../reducers/ChosenKeyReducer";
 import { KeySignature } from "../models/KeySignature";
+import { Info } from "lucide-react";
+import { Button, Tooltip } from "flowbite-react";
+import { buttonStyle } from "../buttonStyle";
 
 interface INoteWithIndex {
   note: string;
@@ -20,6 +23,9 @@ export const RenderNotesExercise = ({}) => {
 
   const [incorrectCounter, setIncorrectCounter] = useState<number>(0);
   const [isComboCorrect, setIsComboCorrect] = useState<string>("waiting");
+
+  const noteExerciseInfo: string =
+    "Press one of the notes on the top and then press the corresponding scale degree for that note. (Example if you are in the key of C: C = 1, D = 2 and so on";
 
   const handleNoteClick = (noteIndex: number) => {
     setNoteClicked(noteIndex);
@@ -107,7 +113,12 @@ export const RenderNotesExercise = ({}) => {
             <div></div>
           )} */}
           <div>You've been right {correctNotes.length} times</div>
-          {correctNotes.length === 7 && <div><b>You win!</b></div>}
+
+          {correctNotes.length === 7 && (
+            <div>
+              <b>You win!</b>
+            </div>
+          )}
         </div>
       </div>
       <div className="flex flex-col h-dvh items-center gap-10">
@@ -116,6 +127,7 @@ export const RenderNotesExercise = ({}) => {
           {shuffledNotes.map(({ note, originalIndex }) => (
             <div key={originalIndex}>
               <button
+                className={`${buttonStyle}`}
                 disabled={correctNotes.length === 7}
                 style={{
                   borderColor: correctNotes.includes(originalIndex)
@@ -139,6 +151,7 @@ export const RenderNotesExercise = ({}) => {
           {noteIndexes.map((_, index) => (
             <div key={index}>
               <button
+                className={`${buttonStyle}`}
                 disabled={correctNotes.length === 7}
                 style={{
                   borderColor: correctNumbers.includes(index)
@@ -154,14 +167,17 @@ export const RenderNotesExercise = ({}) => {
             </div>
           ))}
         </div>
-        <button onClick={handleRestartClick}>Restart</button>
-        <button
-          onClick={() => {
-            handleChangeKeyClick();
-          }}
-        >
-          Choose a different key
-        </button>
+        <div className="flex gap-5 items-center">
+          <button className={`${buttonStyle}`} onClick={() => handleChangeKeyClick()}>Change key</button>
+          <button className={`${buttonStyle}`} onClick={handleRestartClick}>
+            Restart
+          </button>{" "}
+          <Tooltip content={`${noteExerciseInfo}`} animation="duration-400">
+            <Button>
+              <Info className="text-gray-600 hover:cursor-pointer hover:opacity-50 duration-200 ease-in-out"></Info>
+            </Button>
+          </Tooltip>
+        </div>
       </div>
     </>
   );

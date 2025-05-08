@@ -5,6 +5,7 @@ import { ChosenKeyContext } from "../contexts/ChosenKeyContext";
 import { IChosenKeySignatureActionType } from "../reducers/ChosenKeyReducer";
 import { KeySignature } from "../models/KeySignature";
 import { Link } from "react-router-dom";
+import { buttonStyle } from "../buttonStyle";
 
 export const NoteExercise = () => {
   const { chosenKey, chosenKeyDispatch } = useContext(ChosenKeyContext);
@@ -18,7 +19,7 @@ export const NoteExercise = () => {
 
   return (
     <>
-      <Link to={"/"}>Go back to home</Link>
+      <Link to={"/"}><button className={`${buttonStyle}`}>Back to home</button></Link>
 
       {chosenKey.notes.length > 0 ? (
         <RenderNotesExercise></RenderNotesExercise>

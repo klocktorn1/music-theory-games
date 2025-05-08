@@ -3,6 +3,7 @@ import { KeySignaturesContext } from "../contexts/KeySignaturesContext";
 import { KeySignature } from "../models/KeySignature";
 import { ChosenKeyContext } from "../contexts/ChosenKeyContext";
 import { IChosenKeySignatureActionType } from "../reducers/ChosenKeyReducer";
+import { buttonStyle } from "../buttonStyle";
 
 export const RenderKeySignatures = () => {
   const { keySignatures } = useContext(KeySignaturesContext);
@@ -42,6 +43,7 @@ export const RenderKeySignatures = () => {
         {keySignatures.map((keySignature, index) => (
           <div key={index}>
             <button
+            className={`${buttonStyle}`}
               onClick={() => {
                 handleKeyClick(
                   keySignature.key,
@@ -55,7 +57,7 @@ export const RenderKeySignatures = () => {
           </div>
         ))}
       </div>
-      <button onClick={handleRandomizeClick}>Randomize key</button>
+      <button className={`${buttonStyle}`} onClick={handleRandomizeClick}>Randomize key</button>
     </>
   );
 };

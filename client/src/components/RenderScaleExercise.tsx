@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { ChosenKeyContext } from "../contexts/ChosenKeyContext";
 import { IChosenKeySignatureActionType } from "../reducers/ChosenKeyReducer";
 import { KeySignature } from "../models/KeySignature";
+import { buttonStyle } from "../buttonStyle";
 
 interface IChosenKeyScales {
   ionian: string[];
@@ -47,6 +48,7 @@ export const RenderScaleExercise = () => {
     if (scale === randomScale) {
       setIncorrectCounter(0);
       setIsCorrect(true);
+      alert("Correct!")
     } else {
       setIncorrectCounter(incorrectCounter + 1);
     }
@@ -61,21 +63,22 @@ export const RenderScaleExercise = () => {
 
   return (
     <>
-      <div>Current key: {chosenKey.key}</div>
-      <div>
+      <div><b>Current key: {chosenKey.key}</b></div>
+      <div className="flex flex-col gap-6 mt-4">
         <div>
-          Which scale in the key of {chosenKey.key} contains these notes?
+          Which scale in the key of <b>{chosenKey.key}</b> contains these notes?
         </div>
 
         <div className="flex gap-4">
           {scaleNotes.map((note) => (
-            <div>{note}</div>
+            <b><div>{note}</div></b>
           ))}
         </div>
         <div className="flex gap-4">
           {scales.map((scale, index) => (
             <div key={index}>
               <button
+                className={`${buttonStyle}`}
                 onClick={() => {
                   handleScaleClick(scale);
                 }}
@@ -88,6 +91,7 @@ export const RenderScaleExercise = () => {
         <div>You've been wrong {incorrectCounter} times</div>
         <div>
           <button
+            className={`${buttonStyle}`}
             onClick={() => {
               handleChangeKeyClick();
             }}
